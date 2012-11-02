@@ -375,7 +375,7 @@
 				    return "translate(" + d.x + "," + d.y+5 + ")";
 				}
 				function transform4(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]-0.05});
+				    d = map.locationPoint({lon: d.value[3], lat: d.value[4]-0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 		}
@@ -410,7 +410,7 @@
 				console.log(max)
 				togglePoints(min, max);
 				display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;" 
-				
+
 				var display2 = document.getElementById("offices");
 				display2.innerHTML = "POST OFFICES PRESENT:&nbsp;" + active;
 			}
