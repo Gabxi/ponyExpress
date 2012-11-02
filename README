@@ -1,0 +1,4 @@
+The visualization runs properly in an HTML-5 browser.
+The visualization doesn't start until you move the sliders at the bottom.
+It takes at least 5 seconds for the first set to start.
+If after 10 seconds, 
