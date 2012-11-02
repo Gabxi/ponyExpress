@@ -1,0 +1,446 @@
+</html><!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Post Office Visualization</title>
+		<script type="text/javascript" src="./d3/d3.v2.js"></script>
+		<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.5"></script>
+   	 	<script type="text/javascript" src="http://polymaps.org/polymaps.min.js?2.5.0"></script>
+		<style type="text/css">
+			
+
+
+			@import url("http://polymaps.org/style.css");
+
+			html, body {
+  				height: 100%;
+  				background: #E6E6E6;
+  				margin: 0;
+  				font: 10px sans-serif;
+			}
+
+
+			svg {
+  				display: block;
+			}
+
+			circle {
+  				stroke: black;
+  				fill: red;
+  				fill-opacity: .5;
+			}
+
+			#map {
+  			width: 1000px;
+  			height: 1000px;
+			}
+		
+			p {
+				vertical-align: text-top;
+				font:20px sans-serif;
+			}
+
+			#copy {
+			  position: absolute;
+			  left: 0;
+			  bottom: 4px;
+			  padding-left: 5px;
+			  font: 9px sans-serif;
+			  color: #fff;
+			  cursor: default;
+			}
+
+			#copy a {
+			  color: #fff;
+			}
+
+			.compass .back {
+			  fill: #eee;
+			  fill-opacity: .8;
+			}
+
+			.compass .fore {
+			  stroke: #999;
+			  stroke-width: 1.5px;
+			}
+
+			.compass rect.back.fore {
+			  fill: #999;
+			  fill-opacity: .3;
+			  stroke: #eee;
+			  stroke-width: 1px;
+			  shape-rendering: crispEdges;
+			}
+
+			.compass .direction {
+			  fill: none;
+			}
+
+			.compass .chevron {
+			  fill: none;
+			  stroke: #999;
+			  stroke-width: 5px;
+			}
+
+			.compass .zoom .chevron {
+			  stroke-width: 4px;
+			}
+
+			.compass .active .chevron, .compass .chevron.active {
+			  stroke: #fff;
+			}
+
+			.compass.active .active .direction {
+			  fill: #999;
+			}
+
+			#chosen #chosen2 #chosen3 {
+				border-radius:10px;
+				width:45px;
+				padding-top:10px; padding-bottom:10px;
+				text-align:center;
+				font-weight:bold;
+				font-size:large;
+				margin-left:40px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td><div id="map"></div></td>
+				<td><div id="chosen">Year: </div><input id="year" type="range" min="1870" max="1900"  onchange="updateSlider(this.value)" /></td>
+			</tr>
+		</table>
+		<script type="text/javascript">
+
+
+		var w = 1280,
+    		h = 800;
+
+
+
+		var projection = d3.geo.azimuthal()
+    				.mode("equidistant")
+				    .origin([-98, 38])
+				    .scale(1400)
+				    .translate([640, 360]);
+
+		var svg = d3.select("body").insert("svg:svg", "h2")
+    				.attr("width", w)
+    				.attr("height", h);
+
+		var cells = svg.append("svg:g")
+    		.attr("id", "cells");
+
+    	
+
+		var yearSlider = 1901;
+		var data;
+		function updateSlider(slideAmount) {
+			var display1 = document.getElementById("year");
+			//var display2 = document.getElementById("month");
+			//var display3 = document.getElementById("day");
+
+			var display = document.getElementById("chosen");
+
+			display.innerHTML="Year: " + display1.value;
+			//display = document.getElementById("chosen2");
+			//display.innerHTML="Month: " + display2.value;
+
+			//display = document.getElementById("chosen3");
+			//display.innerHTML="Day: " + display3.value;
+
+			yearSlider = slideAmount;
+			
+			togglePoints(display1.value);
+
+			var positions = []
+			d3.selectAll(".active")
+			.each(function(d) {
+				positions.push(projection(+[d.value[5], +d.value[6]]));
+			});
+			//drawVoronoi(positions);
+		}
+
+		function togglePoints(year) {
+			d3.selectAll("circle").each( function(d, i){
+					var key = d3.select(this).attr("id");
+    				var estabdate = data[key][7];
+    				var estabnumbers = estabdate.split("/");
+    				var distabdate = data[key][12];
+    				var distabnumbers = distabdate.split("/");
+    				if (estabnumbers[2] <= year && distabnumbers[2] >= year) {
+    					d3.select(this)
+    					.attr("class", "active")
+    					
+    					
+    				}
+    				else {
+    					d3.select(this)
+    					.attr("class", "inactive")
+    					
+    					
+    					if (!estabnumbers[13] == false) {
+    						var estabdate2 = estabnumbers[13];
+    						var estabnumbers2 = estabdate2.split("/");
+    						var distabdate2 = distabnumbers[14];
+    						var distabnumbers2 = [];
+    						distabnumbers2 = distabdate2.split("/");
+    						if (estabnumbers2[2] <= year || (distabnumbers2.length < 1)) {
+    							d3.select(this)
+    							.attr("class", "active")
+    					
+    							
+    							
+    							if (distabnumbers2.length > 0) {
+    								if (distabnumbers2[2] < year) {
+    									d3.select(this)
+    									.attr("class", "inactive")
+    									
+    								}	
+    							}
+    						}
+    					}
+
+    					if (!estabnumbers[15] == false) {
+    						var estabdate2 = estabnumbers[15];
+    						var estabnumbers2 = estabdate2.split("/");
+    						var distabdate2 = distabnumbers[16];
+    						var distabnumbers2 = [];
+    						distabnumbers2 = distabdate2.split("/");
+    						if (estabnumbers2[2] <= year || (distabnumbers2.length < 1)) {
+    							d3.select(this)
+    							.attr("class", "active")
+    							if (estabnumbers2[2] == year) {
+
+    							}
+    					
+    							
+    							
+    							if (distabnumbers2.length > 0) {
+    								if (distabnumbers2[2] < year) {
+    									d3.select(this)
+    									 .attr("class", "inactive")
+    									
+    								}
+    							}
+    						}
+    					}
+
+    					if (!estabnumbers[17] == false) {
+    						var estabdate2 = estabnumbers[17];
+    						var estabnumbers2 = estabdate2.split("/");
+    						var distabdate2 = distabnumbers[18];
+    						var distabnumbers2 = [];
+    						distabnumbers2 = distabdate2.split("/");
+    						if (estabnumbers2[2] <= year || (distabnumbers2.length < 1)) {
+    							d3.select(this)
+    							.attr("class", "active")
+    					
+    							
+    							if (distabnumbers2.length > 0) {
+    								if (distabnumbers2[2] < year) {
+    									d3.select(this)
+    									.attr("class", "inactive")
+    									
+    								}
+    							}
+    						}
+    					}
+
+    				}
+    			});
+
+				d3.selectAll(".active")
+				.style("fill", "blue")
+				.style("display", "inline")
+    			.transition().delay(2000).duration(5000).style("opacity", "100");
+
+    			d3.selectAll(".inactive")
+    			.style("fill", "red")
+    			.transition().delay(250).duration(2000).style("opacity", "0");
+
+    		//	d3.selectAll(".inactive")
+			//	.style("display", "none")
+		}
+
+			/*d3.selectAll("circle").transition()
+    		.duration(750)
+		    .delay(function(d, i) { return i * 10; })
+		    );*/
+		var po = org.polymaps;
+		
+		// Create the map object, add it to #map…
+		var map = po.map()
+		    .container(d3.select("#map").append("svg:svg").node())
+		    .zoom(8)
+		    .add(po.interact());
+
+		var defs = svg.append('svg:defs');
+            defs.append('svg:pattern')
+                .attr('id', 'marker')
+                .attr('patternUnits', 'userSpaceOnUse')
+                .attr('width', '6')
+                .attr('height', '6')
+                .append('svg:image')
+                .attr('xlink:href', 'http://www.stanford.edu/~gdykho/node_star.svg')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', 10)
+                .attr('height', 10);
+
+		
+			// Add the CloudMade image tiles as a base layer…
+			map.add(po.image()
+			    .url(po.url("http://{S}tile.cloudmade.com"
+			    + "/32f5d99edf3b457695b907a22823fafb" // http://cloudmade.com/register
+			    + "/998/256/{Z}/{X}/{Y}.png")
+			    .hosts(["a.", "b.", "c.", ""])));
+			
+			map.add(po.layer(overlay)
+    			.tile(false));
+
+			function overlay(tile, proj) {
+				  proj = proj(tile);
+				  var tl = proj.locationPoint({lon: -125.52, lat: 43.10}),
+				      br = proj.locationPoint({lon: -112.6, lat: 31.20}),
+				      image = tile.element = po.svg("image");
+				  image.setAttribute("preserveAspectRatio", "none");
+				  image.setAttribute("x", tl.x);
+				  image.setAttribute("y", tl.y);
+				  image.setAttribute("width", br.x - tl.x);
+				  image.setAttribute("height", br.y - tl.y);
+				  image.setAttribute("opacity", 0.4);
+				  image.setAttributeNS("http://www.w3.org/1999/xlink", "href", "post_map_counties.png");
+			}
+
+			map.add(po.compass()
+	    		.pan("none"));
+			var years = [];
+			for (var i=1870;i<=1900;i++)
+			{ 
+				years.push(i);
+			}
+
+			var days = [];
+			for (var i=1;i<=31;i++)
+			{ 
+				days.push(i);
+			}
+
+			var months = [];
+			for (var i=1;i<=12;i++)
+			{ 
+				months.push(i);
+			}
+
+			// Load the station data. When the data comes back, display it.
+			function plotPoints(data) {
+				// Insert our layer beneath the compass.
+				  var layer = d3.select("#map svg").insert("svg:g", ".compass");
+
+				  // Add an svg:g for each post office.
+				  var marker = layer.selectAll("g")
+				      .data(d3.entries(data))
+				      .enter().append("svg:g")
+				      .attr("transform", transform)
+				      .append("svg:circle")
+				      .attr("r", 10)
+				      .style("fill", "blue")
+					  .style("opacity", "0")
+				      .style("stroke", "black")
+				      .style("stroke-opacity", 1)
+				      .attr("id", function(d) {return d.key})
+				      .style("display", "none")
+    					.on("mousedown", function(d) {
+    						console.log( d.value[5]);
+    						console.log( d.value[6]);
+    						console.log( d.value[7]);
+
+    						d3.selectAll("circle")
+							.attr("r", 10)
+
+							d3.selectAll(".active")
+							.style("fill", "blue")
+					        
+
+    						d3.select(this)
+					        .attr("r", 40)
+					        .style("fill", "none")
+					        .style("stroke", "black")
+					        .style("stroke-opacity", 1e-6)
+					        .style("stroke-width", 3)
+					      .transition()
+					        .duration(750)
+					        .attr("r", 100)
+					        .style("fill", "orange")
+					        .style("stroke-opacity", 1);
+					  })
+    					.on("mouseover", function(d) {
+
+							var name = d.key;
+
+							var county = data[name]
+
+							d3.selectAll(".active")
+							.style("fill", "blue")
+							.call(function(d) {
+								console.log(d.key)
+							}
+							);
+
+					        /*
+
+    						d3.select(this)
+					        .attr("r", 40)
+					        .style("fill", "none")
+					        .style("stroke", "black")
+					        .style("stroke-opacity", 1e-6)
+					        .style("stroke-width", 3)
+					      .transition()
+					        .duration(750)
+					        .attr("r", 100)
+					        .style("fill", "orange")
+					        .style("stroke-opacity", 1);*/
+					  })
+    					;
+
+				 
+				 
+		
+				  // Whenever the map moves, update the marker positions.
+				  map.on("move", function() {
+				    layer.selectAll("g").attr("transform", transform);
+				  });
+
+				function transform(d) {
+				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]});
+				    return "translate(" + d.x + "," + d.y + ")";
+				}
+		}
+
+		d3.json("http://www.stanford.edu/~gdykho/postOffice.json", function(json) {
+		  	data = json;
+		  	plotPoints(json);
+		});
+
+		function drawVoronoi(p) {
+
+			  // Compute the Voronoi diagram of post office' projected positions.
+			console.log()
+			var polygons = d3.geom.voronoi(p);
+
+			var g = cells.selectAll("g")
+			    .data(p)
+			    .enter().append("svg:g");
+
+			  g.append("svg:path")
+			      .attr("class", "cell")
+			      .attr("d", function(d, i) { return "M" + polygons[i].join("L") + "Z"; })
+		}
+
+		</script>
+	</body>
+</html>
