@@ -14,6 +14,7 @@
 				width: 100%;
 				margin: 1em auto;
 				height: 40px;
+				margin-left: 18px;
 			}
 
 			input[type="range"]{
@@ -46,7 +47,7 @@
 			h1{
 				text-align: center;
 				font-family: 'Stoke', serif;
-				font-size: 26pt;
+				font-size: 24pt;
 				padding: 0px 0px;
 				background-color: 	-webkit-radial-gradient(  50%   0%,  8% 50%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
 						-webkit-radial-gradient(  50% 100%, 12% 50%, hsla(0,0%,100%,.6) 0%, hsla(0,0%,100%,0) 100%),
@@ -66,14 +67,14 @@
 
 			#chosen{
 				color: #470024;
-				font-size: 18pt;
+				font-size: 16pt;
 				font-family: 'Stoke', serif;
 				margin-left: 10px;
 			}
 
 			#currentCounty{
 				color: green;
-				font-size: 18pt;
+				font-size: 16pt;
 				font-family: 'Stoke', serif;
 				margin-left: 10px;
 			}
@@ -81,7 +82,7 @@
 			#offices{
 				color: green;
 				color: #470024;
-				font-size: 18pt;
+				font-size: 16pt;
 				font-family: 'Stoke', serif;
 				margin-left: 10px;
 			}
@@ -92,7 +93,7 @@
 				overflow: visible; 
 				padding: 0; 
 				margin: 24px 0px 0px 0px; 
-				width:906px ; 
+				width:878px ; 
 			}
 
 			.ui-slider{
@@ -101,7 +102,7 @@
 				overflow: visible; 
 				padding: 0; 
 				margin: 24px 0px 0px 0px; 
-				width:906px ; 
+				width:878px ; 
 				height: 10px;
 			}
 
@@ -121,6 +122,13 @@
 				background: -webkit-gradient(linear, left top, right top, color-stop(0%,#fceabb), color-stop(50%,#fccd4d), color-stop(100%,#f8b500), color-stop(100%,#fbdf93)); /* Chrome,Safari4+ */
 			}
 
+			h3{
+				font-size: 8pt;
+				color: grey;
+				font-family: 'Stoke', serif;
+				margin: 6px 0px -9px 0px;
+				padding: 0px 0px;
+			}
 
 			p{
 				display: inline;
