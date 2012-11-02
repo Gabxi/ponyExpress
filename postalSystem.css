@@ -16,24 +16,57 @@
 				height: 40px;
 			}
 
-			.main-container {
+			.main-container{
   				width: 1000px;
   				margin: 0 auto;
-  				padding: 40px 20px;
+  				padding: 10px 20px 0px 20px;
+			}
+
+			.title{
+				width: 1000px;
+
+			}
+
+			h1{
+				text-align: center;
+				font-family: 'Stoke', serif;
+				font-size: 28pt;
+				background-color: 	-webkit-radial-gradient(  50%   0%,  8% 50%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+						-webkit-radial-gradient(  50% 100%, 12% 50%, hsla(0,0%,100%,.6) 0%, hsla(0,0%,100%,0) 100%),
+						-webkit-radial-gradient(   0%  50%, 50%  7%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+						-webkit-radial-gradient( 100%  50%, 50%  5%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+						
+						-webkit-repeating-radial-gradient(	50% 50%, 100% 100%, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   3%, hsla(0,0%,  0%,.1) 3.5%),
+						-webkit-repeating-radial-gradient(	50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%,.1) 7.5%),
+						-webkit-repeating-radial-gradient(	50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.2) 2.2%),
+						
+						-webkit-radial-gradient(	50% 50%, 200% 50%, hsla(0,0%,90%,1) 5%, hsla(0,0%,85%,1) 30%, hsla(0,0%,60%,1) 100%);	
+			}
+
+			.main-info{
+				margin: 8px 0px;
 			}
 
 			#chosen{
-				float: center;
 				color: #470024;
-				font-size: 24pt;
+				font-size: 18pt;
 				font-family: 'Stoke', serif;
+				margin-left: 10px;
 			}
 
 			#currentCounty{
-				float: center;
-				color: #470024;
-				font-size: 24pt;
+				color: green;
+				font-size: 18pt;
 				font-family: 'Stoke', serif;
+				margin-left: 10px;
+			}
+
+			#offices{
+				color: green;
+				color: #470024;
+				font-size: 18pt;
+				font-family: 'Stoke', serif;
+				margin-left: 10px;
 			}
 
 			#year{
@@ -47,6 +80,11 @@
 
 			p{
 				display: inline;
+			}
+
+			.slider_label{
+				font-size: 12pt;
+				font-family: "Helvetica-Neue";
 			}
 
 			svg {
@@ -63,11 +101,6 @@
 				float: center;
   				width: 1000px;
   				height: 1000px;
-			}
-		
-			p {
-				vertical-align: text-top;
-				font:20px sans-serif;
 			}
 
 			#copy {

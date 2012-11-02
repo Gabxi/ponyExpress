@@ -12,18 +12,20 @@
 	<body>
 
 		<div class="main-container">
-			<div id="main_info">
+			<div id="title"><h1>IMAGINING&nbsp;THE&nbsp;WEST</h1></div>
+			<div class="main-info">
 					<p id="chosen">Year: </p>
-					<p id="currentCounty"></p> 
+					<p id="offices"></p>
+					<p id="currentCounty"></p>
 			</div>
 			<div id="county">
 					
 			</div>
 			<div id="map"></div>
 			<div id="time_slide">
-				<p>1870</p>
+				<p class="slider_label">1870</p>
 				<input id="year" type="range" min="1870" max="1900" onchange="updateSlider(this.value)" />
-				<p>1900</p>
+				<p class="slider_label">1900</p>
 			</div>
 		</div>	
 
@@ -60,9 +62,10 @@
 			//var display3 = document.getElementById("day");
 
 			var display = document.getElementById("chosen");
+			var display4 = document.getElementById("offices");
 
-
-			display.innerHTML="YEAR:&nbsp;" + display1.value + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
+			display.innerHTML="YEAR:&nbsp;" + display1.value;
+			display4.innerHTML="POST OFFICES PRESENT:&nbsp;" + active;
 			//display = document.getElementById("chosen2");
 			//display.innerHTML="Month: " + display2.value;
 
@@ -352,6 +355,9 @@
 								}
 							);
 					  }).on("mouseout", function(d) {
+
+					  		var display3 = document.getElementById("currentCounty");
+							display3.innerHTML="";
 
 					  		d3.selectAll("circle")
 					  		.style("fill","blue")
