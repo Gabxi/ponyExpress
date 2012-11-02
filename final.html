@@ -131,7 +131,7 @@
 				d3.selectAll(".active")
 				.style("fill", "blue")
 				.style("display", "inline")
-    			.transition().delay(2000).duration(5000).style("opacity", "100");
+    			.transition().delay(2000).duration(4500).style("opacity", "100");
     			
 				active = 0;
     			d3.selectAll(".active")
@@ -205,7 +205,9 @@
 				months.push(i);
 			}
 
-			// Load the station data. When the data comes back, display it.
+			//This code is based off of https://gist.github.com/1157415
+
+			// Load the post office  data. When the data comes back, display it.
 			function plotPoints(data) {
 				// Insert our layer beneath the compass.
 				  var layer = d3.select("#map svg").insert("svg:g", ".compass");
@@ -402,14 +404,14 @@
 				var val0 = $("#slider-range").slider("values", 0),
 					val1 = $("#slider-range").slider("values", 1);
 					
-				console.log("Hello")
+				console.log
 				var min = $("#slider-range").slider("values", 0),
 				max = $("#slider-range").slider("values", 1)
 				var display1 = document.getElementById("year");
 
 				var display = document.getElementById("chosen");
 
-				console.log(max)
+				
 				togglePoints(min, max);
 				display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;" 
 
