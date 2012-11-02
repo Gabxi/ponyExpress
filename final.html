@@ -284,13 +284,21 @@
 
 							var name = d.key;
 
-							var county = data[name]
+							var county = data[name][0]
+
 
 							d3.selectAll(".active")
-							.style("fill", "blue")
-							.call(function(d) {
-								console.log(d.key)
-							}
+							.style("fill","blue")
+
+							d3.selectAll(".active").each(function(e) {
+									for (var i = 0; i < 3; i++) {
+										var check = data[e.key][i]
+
+										if (check == county) {
+											d3.select(this).style("fill", "green")
+										}
+									}
+								}
 							);
 
 					        /*
