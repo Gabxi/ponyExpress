@@ -6,6 +6,11 @@
 		<script type="text/javascript" src="./d3/d3.v2.js"></script>
 		<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.5"></script>
    	 	<script type="text/javascript" src="http://polymaps.org/polymaps.min.js?2.5.0"></script>
+   	 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    	<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    	<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> 
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
    	 	<link href="postalSystem.css" rel="stylesheet" type="text/css" />
    	 	<link href='http://fonts.googleapis.com/css?family=Stoke' rel='stylesheet' type='text/css'>
 	</head>
@@ -13,7 +18,7 @@
 
 		<div class="main-container">
 			<div id="main_info">
-					<p id="chosen">Year: </p>
+					<p id="chosen">Please pick a year to start </p>
 					<p id="currentCounty"></p> 
 			</div>
 			<div id="county">
@@ -22,6 +27,7 @@
 			<div id="map"></div>
 			<div id="time_slide">
 				<p>1870</p>
+				<div id="slider-range"></div>
 				<input id="year" type="range" min="1870" max="1900" onchange="updateSlider(this.value)" />
 				<p>1900</p>
 			</div>
@@ -29,17 +35,14 @@
 
 		<script type="text/javascript">
 
+			
+
 
 		//A lot of code based off Michael Bostock's website
 
 		var w = 1280,
     		h = 800;
 
-		var projection = d3.geo.azimuthal()
-    				.mode("equidistant")
-				    .origin([-98, 38])
-				    .scale(1400)
-				    .translate([640, 360]);
 
 		var svg = d3.select("body").insert("svg:svg", "h2")
     				.attr("width", w)
@@ -54,7 +57,25 @@
 		var yearSlider = 1901;
 		var data;
 
+
+		function updateSlider(min,max) {
+
+    		var min = $("#slider-range").slider("values", 0),
+				max = $("#slider-range").slider("values", 1)
+			var display1 = document.getElementById("year");
+
+			var display = document.getElementById("chosen");
+			console.log("Hello")
+			
+			console.log(min)
+			console.log(max)
+			togglePoints(min, max);
+			display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
+			return;
+		}
+
 		function updateSlider(slideAmount) {
+    		
 			var display1 = document.getElementById("year");
 			//var display2 = document.getElementById("month");
 			//var display3 = document.getElementById("day");
@@ -62,7 +83,6 @@
 			var display = document.getElementById("chosen");
 
 
-			display.innerHTML="YEAR:&nbsp;" + display1.value + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
 			//display = document.getElementById("chosen2");
 			//display.innerHTML="Month: " + display2.value;
 
@@ -71,24 +91,19 @@
 
 			yearSlider = slideAmount;
 			
-			togglePoints(display1.value);
-/*
-			var positions = []
-			d3.selectAll(".active")
-			.each(function(d) {
-				positions.push(transform(d));
-			});*/
+			togglePoints(display1.value, display1.value);
+			display.innerHTML="YEAR:&nbsp;" + display1.value + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
 
 		}
 
-		function togglePoints(year) {
+		function togglePoints(lowestyear, highestyear) {
 			d3.selectAll("circle").each( function(d, i){
 					var key = d3.select(this).attr("id");
     				var estabdate = data[key][7];
     				var estabnumbers = estabdate.split("/");
     				var distabdate = data[key][12];
     				var distabnumbers = distabdate.split("/");
-    				if (estabnumbers[2] <= year && distabnumbers[2] >= year) {
+    				if (estabnumbers[2] <= lowestyear && distabnumbers[2] >= highestyear) {
     					d3.select(this)
     					.attr("class", "active")
     					
@@ -105,14 +120,14 @@
     						var distabdate2 = distabnumbers[14];
     						var distabnumbers2 = [];
     						distabnumbers2 = distabdate2.split("/");
-    						if (estabnumbers2[2] <= year || (distabnumbers2.length < 1)) {
+    						if (estabnumbers2[2] <= lowestyear || (distabnumbers2.length < 1)) {
     							d3.select(this)
     							.attr("class", "active")
     					
     							
     							
     							if (distabnumbers2.length > 0) {
-    								if (distabnumbers2[2] < year) {
+    								if (distabnumbers2[2] >= highestyear) {
     									d3.select(this)
     									.attr("class", "inactive")
     									
@@ -127,17 +142,14 @@
     						var distabdate2 = distabnumbers[16];
     						var distabnumbers2 = [];
     						distabnumbers2 = distabdate2.split("/");
-    						if (estabnumbers2[2] <= year || (distabnumbers2.length < 1)) {
+    						if (estabnumbers2[2] <= lowestyear || (distabnumbers2.length < 1)) {
     							d3.select(this)
     							.attr("class", "active")
-    							if (estabnumbers2[2] == year) {
-
-    							}
     					
     							
     							
     							if (distabnumbers2.length > 0) {
-    								if (distabnumbers2[2] < year) {
+    								if (distabnumbers2[2] >=highestyear) {
     									d3.select(this)
     									 .attr("class", "inactive")
     									
@@ -152,13 +164,13 @@
     						var distabdate2 = distabnumbers[18];
     						var distabnumbers2 = [];
     						distabnumbers2 = distabdate2.split("/");
-    						if (estabnumbers2[2] <= year || (distabnumbers2.length < 1)) {
+    						if (estabnumbers2[2] <= lowestyear || (distabnumbers2.length < 1)) {
     							d3.select(this)
     							.attr("class", "active")
     					
     							
     							if (distabnumbers2.length > 0) {
-    								if (distabnumbers2[2] < year) {
+    								if (distabnumbers2[2] >=highestyear) {
     									d3.select(this)
     									.attr("class", "inactive")
     									
@@ -199,19 +211,7 @@
 		    .container(d3.select("#map").append("svg:svg").node())
 		    .zoom(8)
 		    .add(po.interact());
-
-		var defs = svg.append('svg:defs');
-            defs.append('svg:pattern')
-                .attr('id', 'marker')
-                .attr('patternUnits', 'userSpaceOnUse')
-                .attr('width', '6')
-                .attr('height', '6')
-                .append('svg:image')
-                .attr('xlink:href', 'http://www.stanford.edu/~gdykho/node_star.svg')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('width', 10)
-                .attr('height', 10);
+		    //The code for polymaps and d3 was modeled after this https://gist.github.com/899670
 
 		
 			// Add the CloudMade image tiles as a base layer…
@@ -237,6 +237,7 @@
 				  image.setAttribute("opacity", 0.4);
 				  image.setAttributeNS("http://www.w3.org/1999/xlink", "href", "post_map_counties.png");
 			}
+
 
 			map.add(po.compass()
 	    		.pan("none"));
@@ -418,15 +419,15 @@
 				}
 
 				function transform2(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]+0.15});
-				    return "translate(" + d.x + "," + d.y + ")";
-				}
-				function transform3(d) {
 				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]+0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
+				function transform3(d) {
+				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]});
+				    return "translate(" + d.x + "," + d.y+5 + ")";
+				}
 				function transform4(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]-0.15});
+				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]-0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 		}
@@ -451,6 +452,33 @@
 			      .attr("d", function(d, i) { return "M" + polygons[i].join("L") + "Z"; })
 		}
 
+
+		//code based off http://marcneuwirth.com/wp-content/uploads/2010/06/timeslider2.html
+   
+        	$("#slider-range").slider({
+				range: true,
+				min: 1870,
+				max: 1900,
+				values: [1870, 1875],
+				slide: slideTime
+			});
+			function slideTime(event, ui){
+				var val0 = $("#slider-range").slider("values", 0),
+					val1 = $("#slider-range").slider("values", 1);
+					
+				console.log("Hello")
+				var min = $("#slider-range").slider("values", 0),
+				max = $("#slider-range").slider("values", 1)
+				var display1 = document.getElementById("year");
+
+				var display = document.getElementById("chosen");
+
+				console.log(max)
+				togglePoints(min, max);
+				display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
+			}
+			slideTime();
+   
 		</script>
 	</body>
 </html>
