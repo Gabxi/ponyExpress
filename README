@@ -1,4 +1,4 @@
-The visualization runs properly in an HTML-5 browser.
+The visualization runs properly in an HTML-5 browser, preferably Chrome
 The visualization doesn't start until you move the sliders at the bottom.
-It takes at least 5 seconds for the first set to start.
-If after 10 seconds, 
+It takes at least 5 seconds for the first set to start, depending on the speed of your computer.
+If after 10 seconds, nothing happens, there might be a bug and refresh the browser, or try another computer, preferably faster

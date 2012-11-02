@@ -30,6 +30,7 @@
 
  			input[type="range"]::-webkit-slider-thumb{
  				-webkit-appearance: none; 
+
  				position: relative;
     			top: -1px;
    				 z-index: 1;
@@ -107,7 +108,7 @@
 			.metal.radial:after {	-webkit-transform: rotate(-65deg); }
 
 			h1{
-				text-align: center;
+				text-align: left;
 				font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;				
 				font-size: 24pt;
 				padding: 0px 0px;	
