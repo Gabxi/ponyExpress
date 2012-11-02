@@ -261,15 +261,30 @@
     						console.log( d.value[6]);
     						console.log( d.value[7]);
 
+
+    						var name = d.key;
+
+							var county = data[name][0]
+
     						d3.selectAll("circle")
 							.attr("r", 10)
 
 							d3.selectAll(".active")
-							.style("fill", "blue")
+							.style("fill","blue")
+
+							d3.selectAll(".active").each(function(e) {
+									for (var i = 0; i < 3; i++) {
+										var check = data[e.key][i]
+
+										if (check == county) {
+											d3.select(this).style("fill", "green")
+										}
+									}
+								}
+							);
 					        
 
     						d3.select(this)
-					        .attr("r", 40)
 					        .style("fill", "none")
 					        .style("stroke", "black")
 					        .style("stroke-opacity", 1e-6)
@@ -286,9 +301,6 @@
 
 							var county = data[name][0]
 
-
-							d3.selectAll(".active")
-							.style("fill","blue")
 
 							d3.selectAll(".active").each(function(e) {
 									for (var i = 0; i < 3; i++) {
@@ -314,6 +326,15 @@
 					        .attr("r", 100)
 					        .style("fill", "orange")
 					        .style("stroke-opacity", 1);*/
+					  }).on("mouseout", function(d) {
+
+					  		d3.selectAll("circle")
+					  		.style("fill","blue")
+
+					  		d3.selectAll("circle")
+					  		.transition().duration(1000)
+							.attr("r", 10)
+
 					  })
     					;
 
