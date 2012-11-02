@@ -76,12 +76,11 @@
 			var display1 = document.getElementById("year");
 
 			var display = document.getElementById("chosen");
-			console.log("Hello")
-			
-			console.log(min)
-			console.log(max)
+			var display2 = document.getElementById("offices");
+
 			togglePoints(min, max);
-			display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
+			display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;"
+			display2.innerHTML = "POST OFFICES PRESENT:&nbsp;" + active;
 			return;
 		}
 
@@ -112,9 +111,9 @@
 		function togglePoints(lowestyear, highestyear) {
 			d3.selectAll("circle").each( function(d, i){
 					var key = d3.select(this).attr("id");
-    				var estabdate = data[key][7];
+    				var estabdate = data[key][2];
     				var estabnumbers = estabdate.split("/");
-    				var distabdate = data[key][12];
+    				var distabdate = data[key][3];
     				var distabnumbers = distabdate.split("/");
     				if (estabnumbers[2] <= lowestyear && distabnumbers[2] >= highestyear) {
     					d3.select(this)
@@ -125,80 +124,23 @@
     				else {
     					d3.select(this)
     					.attr("class", "inactive")
-    					
-    					
-    					if (!estabnumbers[13] == false) {
-    						var estabdate2 = estabnumbers[13];
-    						var estabnumbers2 = estabdate2.split("/");
-    						var distabdate2 = distabnumbers[14];
-    						var distabnumbers2 = [];
-    						distabnumbers2 = distabdate2.split("/");
-    						if (estabnumbers2[2] <= lowestyear || (distabnumbers2.length < 1)) {
-    							d3.select(this)
-    							.attr("class", "active")
-    					
-    							
-    							
-    							if (distabnumbers2.length > 0) {
-    								if (distabnumbers2[2] >= highestyear) {
-    									d3.select(this)
-    									.attr("class", "inactive")
-    									
-    								}	
-    							}
-    						}
     					}
-
-    					if (!estabnumbers[15] == false) {
-    						var estabdate2 = estabnumbers[15];
-    						var estabnumbers2 = estabdate2.split("/");
-    						var distabdate2 = distabnumbers[16];
-    						var distabnumbers2 = [];
-    						distabnumbers2 = distabdate2.split("/");
-    						if (estabnumbers2[2] <= lowestyear || (distabnumbers2.length < 1)) {
-    							d3.select(this)
-    							.attr("class", "active")
-    					
-    							
-    							
-    							if (distabnumbers2.length > 0) {
-    								if (distabnumbers2[2] >=highestyear) {
-    									d3.select(this)
-    									 .attr("class", "inactive")
-    									
-    								}
-    							}
-    						}
-    					}
-
-    					if (!estabnumbers[17] == false) {
-    						var estabdate2 = estabnumbers[17];
-    						var estabnumbers2 = estabdate2.split("/");
-    						var distabdate2 = distabnumbers[18];
-    						var distabnumbers2 = [];
-    						distabnumbers2 = distabdate2.split("/");
-    						if (estabnumbers2[2] <= lowestyear || (distabnumbers2.length < 1)) {
-    							d3.select(this)
-    							.attr("class", "active")
-    					
-    							
-    							if (distabnumbers2.length > 0) {
-    								if (distabnumbers2[2] >=highestyear) {
-    									d3.select(this)
-    									.attr("class", "inactive")
-    									
-    								}
-    							}
-    						}
-    					}
-
-    				}
-    			});
+    				});
 				
 				d3.selectAll(".active")
 				.style("fill", "blue")
 				.style("display", "inline")
-    			.transition().delay(2000).duration(4500).style("opacity", "100");
+    			.transition().delay(2000).duration(4500).style("opacity", function(d) {
+    				
+    				date = data[d.key][2]
+    				console.log(d.key)
+    				console.log(data[d.key][2])
+    				console.log(date)
+    				year = Number(date.split("/")[2])
+    				opa = (highestyear - year) * 10
+    				console.log(opa)
+    				return String(opa);
+    			});
     			
 				active = 0;
     			d3.selectAll(".active")
@@ -312,14 +254,14 @@
 							.style("fill","blue")
 
 							d3.selectAll(".active").each(function(e) {
-								for (var i = 0; i < 3; i++) {
-										var check = data[e.key][i]
+								
+										var check = data[e.key][6]
 
 										if (check == county) {
 											d3.select(this).style("fill", "green")
 										}
 									}
-								}
+								
 							);
 					        
 
@@ -358,13 +300,13 @@
 							display3.innerHTML="COUNTY:&nbsp;" + county;
 
 							d3.selectAll(".active").each(function(e) {
-									for (var i = 0; i < 3; i++) {
-										var check = data[e.key][i]
+								
+										var check = data[e.key][6]
 
 										if (check == county) {
 											d3.select(this).style("fill", "green")
 										}
-									}
+									
 								}
 							);
 					  }).on("mouseout", function(d) {
@@ -396,7 +338,7 @@
 				      	return d.key + "text"})
 				      .text(function(d) { 
 				      	
-				      	return "Name: " + data[d.key][4] })
+				      	return "Name: " + data[d.key][0] })
 				      .attr("display", "none")
 				      .attr("dy", ".35em")
     					.attr("text-anchor", "middle")
@@ -414,7 +356,7 @@
 				      	return d.key + "text"})
 				      .text(function(d) { 
 				      	
-				      	return "Established: " + data[d.key][7] })
+				      	return data[d.key][1]+":"+ data[d.key][2] })
 				      .attr("display", "none")
 				      .attr("dy", ".35em")
     					.attr("text-anchor", "middle")
@@ -432,25 +374,25 @@
 				  });
 
 				function transform(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 
 				function transform2(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]+0.05});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]+0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 				function transform3(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]});
 				    return "translate(" + d.x + "," + d.y+5 + ")";
 				}
 				function transform4(d) {
-				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]-0.05});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]-0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 		}
 
-		d3.json("http://www.stanford.edu/~gdykho/postOffice.json", function(json) {
+		d3.json("http://www.stanford.edu/~gdykho/postOfficeFinal.json", function(json) {
 		  	data = json;
 		  	plotPoints(json);
 		});
@@ -477,7 +419,7 @@
 				range: true,
 				min: 1870,
 				max: 1900,
-				values: [1875, 1875],
+				values: [1875, 1885],
 				slide: slideTime
 			});
 			function slideTime(event, ui){
@@ -491,9 +433,11 @@
 
 				var display = document.getElementById("chosen");
 
+				var display2 = document.getElementById("offices");
 				
 				togglePoints(min, max);
-				display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
+				display.innerHTML="YEAR:&nbsp;" + min + "-" + max + "&nbsp;&nbsp;&nbsp;&nbsp;"
+				display2.innerHTML = "POST OFFICES PRESENT:&nbsp;" + active;
 			}
 			slideTime();
    
