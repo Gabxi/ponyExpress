@@ -93,18 +93,15 @@
 			var display = document.getElementById("chosen");
 			var display4 = document.getElementById("offices");
 
-			display.innerHTML="YEAR:&nbsp;" + display1.value;
-			display4.innerHTML="POST OFFICES PRESENT:&nbsp;" + active;
+			
 
-			//display = document.getElementById("chosen2");
-			//display.innerHTML="Month: " + display2.value;
-
-			//display = document.getElementById("chosen3");
-			//display.innerHTML="Day: " + display3.value;
 
 			yearSlider = slideAmount;
 			
 			togglePoints(display1.value, display1.value);
+
+			display.innerHTML="YEAR:&nbsp;" + display1.value;
+			display4.innerHTML="POST OFFICES PRESENT:&nbsp;" + active;
 
 		}
 
@@ -133,16 +130,21 @@
     			.transition().delay(2000).duration(4500).style("opacity", function(d) {
     				
     				date = data[d.key][2]
-    				console.log(d.key)
-    				console.log(data[d.key][2])
-    				console.log(date)
+    		
     				year = Number(date.split("/")[2])
-    				opa = (highestyear - year) * 10
+    				opa = (highestyear - year + 1) * 5
     				console.log(opa)
     				return String(opa);
-    			});
-    			
+    			});/*
+				d3.selectAll(".active")
+				.style("fill", "blue")
+				.style("display", "inline")
+    			.transition().delay(2000).duration(4500).style("opacity", "100")
+    			*/
 				active = 0;
+
+
+
     			d3.selectAll(".active")
     			.each(
     				function() {
@@ -243,7 +245,7 @@
 
     						var name = d.key;
 
-							var county = data[name][0]
+							var county = data[name][6]
 
 							globalCounty = county;
 
@@ -294,7 +296,7 @@
 
 							var name = d.key;
 
-							var county = data[name][0]
+							var county = data[name][6]
 
 							var display3 = document.getElementById("currentCounty");
 							display3.innerHTML="COUNTY:&nbsp;" + county;
@@ -397,20 +399,6 @@
 		  	plotPoints(json);
 		});
 
-		function drawVoronoi(p) {
-
-			  // Compute the Voronoi diagram of post office' projected positions.
-			console.log()
-			var polygons = d3.geom.voronoi(p);
-
-			var g = cells.selectAll("g")
-			    .data(p)
-			    .enter().append("svg:g");
-
-			  g.append("svg:path")
-			      .attr("class", "cell")
-			      .attr("d", function(d, i) { return "M" + polygons[i].join("L") + "Z"; })
-		}
 
 
 		//code based off http://marcneuwirth.com/wp-content/uploads/2010/06/timeslider2.html
@@ -426,7 +414,7 @@
 				var val0 = $("#slider-range").slider("values", 0),
 					val1 = $("#slider-range").slider("values", 1);
 					
-				console.log
+				
 				var min = $("#slider-range").slider("values", 0),
 				max = $("#slider-range").slider("values", 1)
 				var display1 = document.getElementById("year");
