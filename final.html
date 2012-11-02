@@ -29,7 +29,9 @@
 
 		<script type="text/javascript">
 
-		var globalCounty = "";
+
+		//A lot of code based off Michael Bostock's website
+
 		var w = 1280,
     		h = 800;
 
@@ -70,13 +72,13 @@
 			yearSlider = slideAmount;
 			
 			togglePoints(display1.value);
-
+/*
 			var positions = []
 			d3.selectAll(".active")
 			.each(function(d) {
-				positions.push(projection(+[d.value[5], +d.value[6]]));
-			});
-			//drawVoronoi(positions);
+				positions.push(transform(d));
+			});*/
+
 		}
 
 		function togglePoints(year) {
@@ -189,10 +191,7 @@
 			//	.style("display", "none")
 		}
 
-			/*d3.selectAll("circle").transition()
-    		.duration(750)
-		    .delay(function(d, i) { return i * 10; })
-		    );*/
+			
 		var po = org.polymaps;
 		
 		// Create the map object, add it to #map…
@@ -264,6 +263,9 @@
 				// Insert our layer beneath the compass.
 				  var layer = d3.select("#map svg").insert("svg:g", ".compass");
 
+				  
+
+
 				  // Add an svg:g for each post office.
 				  var marker = layer.selectAll("g")
 				      .data(d3.entries(data))
@@ -278,9 +280,7 @@
 				      .attr("id", function(d) {return d.key})
 				      .style("display", "none")
     					.on("mousedown", function(d) {
-    						console.log( d.value[5]);
-    						console.log( d.value[6]);
-    						console.log( d.value[7]);
+    						
 
 
     						var name = d.key;
@@ -296,7 +296,7 @@
 							.style("fill","blue")
 
 							d3.selectAll(".active").each(function(e) {
-									for (var i = 0; i < 3; i++) {
+								for (var i = 0; i < 3; i++) {
 										var check = data[e.key][i]
 
 										if (check == county) {
@@ -316,7 +316,21 @@
 					        .duration(750)
 					        .attr("r", 100)
 					        .style("fill", "orange")
-					        .style("stroke-opacity", 1);
+					        .style("stroke-opacity", 1)
+					        var textcheck = name + "text"
+
+					        d3.selectAll("text").each(function(e) {
+
+										var check = e.key +"text"
+										
+										if (check == textcheck) {
+											
+											d3.select(this).style("display", "inline")
+										}
+									
+								});
+					        
+
 					  })
     					.on("mouseover", function(d) {
 
@@ -337,20 +351,6 @@
 									}
 								}
 							);
-
-					        /*
-
-    						d3.select(this)
-					        .attr("r", 40)
-					        .style("fill", "none")
-					        .style("stroke", "black")
-					        .style("stroke-opacity", 1e-6)
-					        .style("stroke-width", 3)
-					      .transition()
-					        .duration(750)
-					        .attr("r", 100)
-					        .style("fill", "orange")
-					        .style("stroke-opacity", 1);*/
 					  }).on("mouseout", function(d) {
 
 					  		d3.selectAll("circle")
@@ -360,19 +360,73 @@
 					  		.transition().duration(1000)
 							.attr("r", 10)
 
+							 d3.selectAll("text").style("display", "none")
+							 
 					  })
     					;
 
+    				var layer2 = d3.select("#map svg").append("svg:g");
+    				var name;
+    				var marker2 = layer2.selectAll("g")
+				      .data(d3.entries(data))
+				      .enter().append("svg:g")
+				      .attr("transform", transform2)
+				      .append("svg:text")
+				      .attr("class", function(d) {
+				      	name = d.key;
+				      	return d.key + "text"})
+				      .text(function(d) { 
+				      	
+				      	return "Name: " + data[d.key][4] })
+				      .attr("display", "none")
+				      .attr("dy", ".35em")
+    					.attr("text-anchor", "middle")
+    					.style("font", "300 16px Garamond")
+    					;
+
+				 	var layer4 = d3.select("#map svg").append("svg:g");
+    				var marker4 = layer4.selectAll("g")
+				      .data(d3.entries(data))
+				      .enter().append("svg:g")
+				      .attr("transform", transform4)
+				      .append("svg:text")
+				      .attr("class", function(d) {
+				      	name = d.key;
+				      	return d.key + "text"})
+				      .text(function(d) { 
+				      	
+				      	return "Established: " + data[d.key][7] })
+				      .attr("display", "none")
+				      .attr("dy", ".35em")
+    					.attr("text-anchor", "middle")
+    					.style("font", "300 16px Garamond")
+    					;
 				 
-				 
-		
+
+
+
 				  // Whenever the map moves, update the marker positions.
 				  map.on("move", function() {
 				    layer.selectAll("g").attr("transform", transform);
+				    layer2.selectAll("g").attr("transform", transform2);
+				    layer4.selectAll("g").attr("transform", transform4);
 				  });
 
 				function transform(d) {
 				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]});
+				    return "translate(" + d.x + "," + d.y + ")";
+				}
+
+				function transform2(d) {
+				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]+0.15});
+				    return "translate(" + d.x + "," + d.y + ")";
+				}
+				function transform3(d) {
+				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]+0.05});
+				    return "translate(" + d.x + "," + d.y + ")";
+				}
+				function transform4(d) {
+				    d = map.locationPoint({lon: d.value[5], lat: d.value[6]-0.15});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 		}
