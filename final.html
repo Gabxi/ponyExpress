@@ -20,7 +20,7 @@
 
 			<div><h1>IMAGINING&nbsp;THE&nbsp;WEST</h1></div>
 			<div class="main-info">
-					<p id="chosen">Year: </p>
+					<p id="chosen">This is an interactive data visualization of post offices in California from 1870-1900 </p>
 					<p id="offices"></p>
 					<p id="currentCounty"></p>
 			</div>
@@ -46,7 +46,7 @@
 
 		<script type="text/javascript">
 
-			
+		
 
 
 		//A lot of code based off Michael Bostock's website
@@ -59,8 +59,6 @@
     				.attr("width", w)
     				.attr("height", h);
 
-		var cells = svg.append("svg:g")
-    		.attr("id", "cells");
 
     	/* slider variables */
 
@@ -123,7 +121,7 @@
     					.attr("class", "inactive")
     					}
     				});
-				
+				/*
 				d3.selectAll(".active")
 				.style("fill", "blue")
 				.style("display", "inline")
@@ -135,12 +133,12 @@
     				opa = ((highestyear - year + 1) / 10) 
     				
     				return String(opa);
-    			});/*
+    			});*/
 				d3.selectAll(".active")
 				.style("fill", "blue")
 				.style("display", "inline")
-    			.transition().delay(2000).duration(4500).style("opacity", "100")
-    			*/
+    			.transition().delay(3000).duration(3000).style("opacity", "100")
+    			
 				active = 0;
 
 
@@ -154,7 +152,7 @@
 
     			d3.selectAll(".inactive")
     			.style("fill", "red")
-    			.transition().delay(250).duration(2000).style("opacity", "0");
+    			.transition().duration(3000).style("opacity", "0");
 
     		//	d3.selectAll(".inactive")
 			//	.style("display", "none")

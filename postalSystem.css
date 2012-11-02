@@ -31,7 +31,7 @@
  			input[type="range"]::-webkit-slider-thumb{
   				<!---webkit-appearance:none !important; -->
 				background: yellow; 
-				background:url(button.png);
+				
  			}
 
 			.main-container{
