@@ -5,6 +5,7 @@ for line in f:
 	arr = line.split(",")
 	str += arr[0][:-1] +  arr[3][1:-1] + arr[4][1:]+ ":["
 	str += arr[1] + ","
+	str += arr[2] + ","
 	str += arr[3] + ","
 	str += arr[4] + ","
 	str += arr[5][1:-1] + ","

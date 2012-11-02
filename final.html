@@ -109,9 +109,9 @@
 		function togglePoints(lowestyear, highestyear) {
 			d3.selectAll("circle").each( function(d, i){
 					var key = d3.select(this).attr("id");
-    				var estabdate = data[key][1];
+    				var estabdate = data[key][2];
     				var estabnumbers = estabdate.split("/");
-    				var distabdate = data[key][2];
+    				var distabdate = data[key][3];
     				var distabnumbers = distabdate.split("/");
     				if (estabnumbers[2] <= lowestyear && distabnumbers[2] >= highestyear) {
     					d3.select(this)
@@ -244,7 +244,7 @@
 
 							d3.selectAll(".active").each(function(e) {
 
-								var check = data[e.key][5]
+								var check = data[e.key][6]
 
 								if (check == county) {
 									d3.select(this).style("fill", "green")
@@ -282,14 +282,14 @@
 
 							var name = d.key;
 
-							var county = data[name][5]
+							var county = data[name][6]
 
 							var display3 = document.getElementById("currentCounty");
 							display3.innerHTML="COUNTY:&nbsp;" + county;
 
 							d3.selectAll(".active").each(function(e) {
 									
-										var check = data[e.key][5]
+										var check = data[e.key][6]
 
 										if (check == county) {
 											d3.select(this).style("fill", "green")
@@ -331,6 +331,7 @@
 				      .attr("dy", ".35em")
     					.attr("text-anchor", "middle")
     					.style("font", "300 16px Garamond")
+    					.style("font-weight", "bold")
     					;
 
 				 	var layer4 = d3.select("#map svg").append("svg:g");
@@ -344,11 +345,12 @@
 				      	return d.key + "text"})
 				      .text(function(d) { 
 				      	
-				      	return "Established: " + data[d.key][1] })
+				      	return data[d.key][1] + ": " + data[d.key][2] })
 				      .attr("display", "none")
 				      .attr("dy", ".35em")
     					.attr("text-anchor", "middle")
     					.style("font", "300 16px Garamond")
+    					.style("font-weight", "bold")
     					;
 				 
 
@@ -362,20 +364,20 @@
 				  });
 
 				function transform(d) {
-				    d = map.locationPoint({lon: d.value[3], lat: d.value[4]});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 
 				function transform2(d) {
-				    d = map.locationPoint({lon: d.value[3], lat: d.value[4]+0.05});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]+0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 				function transform3(d) {
-				    d = map.locationPoint({lon: d.value[3], lat: d.value[4]});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]});
 				    return "translate(" + d.x + "," + d.y+5 + ")";
 				}
 				function transform4(d) {
-				    d = map.locationPoint({lon: d.value[3], lat: d.value[4]-0.05});
+				    d = map.locationPoint({lon: d.value[4], lat: d.value[5]-0.05});
 				    return "translate(" + d.x + "," + d.y + ")";
 				}
 		}
