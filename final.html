@@ -1,4 +1,4 @@
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -31,10 +31,14 @@
 			<div id="time_slide">
 
 				<p class="slider_label">1870</p>
-
-				<div id="slider-range"></div>
-
 				<input id="year" type="range" min="1870" max="1900" onchange="updateSlider(this.value)" />
+				<p class="slider_label">1900</p>
+
+				<div>
+					<p class="slider_label">1870</p>
+					<div id="slider-range"></div>
+					<p class="slider_label">1900</p>
+				</div>
 
 			</div>
 		</div>	
@@ -89,12 +93,9 @@
 			var display = document.getElementById("chosen");
 			var display4 = document.getElementById("offices");
 
-<<<<<<< HEAD
 			display.innerHTML="YEAR:&nbsp;" + display1.value;
 			display4.innerHTML="POST OFFICES PRESENT:&nbsp;" + active;
-=======
 
->>>>>>> 2c78727696372dab8261193eb444d1826e4697aa
 			//display = document.getElementById("chosen2");
 			//display.innerHTML="Month: " + display2.value;
 
@@ -104,7 +105,6 @@
 			yearSlider = slideAmount;
 			
 			togglePoints(display1.value, display1.value);
-			display.innerHTML="YEAR:&nbsp;" + display1.value + "&nbsp;&nbsp;&nbsp;&nbsp;" + "POST OFFICES PRESENT:&nbsp;" + active;
 
 		}
 
@@ -474,7 +474,7 @@
 				range: true,
 				min: 1870,
 				max: 1900,
-				values: [1870, 1875],
+				values: [1872, 1875],
 				slide: slideTime
 			});
 			function slideTime(event, ui){
