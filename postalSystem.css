@@ -9,6 +9,13 @@
   				font: 10px sans-serif;
 			}
 
+			.time_slide{
+				background-color: #fff;
+				width: 100%;
+				margin: 1em auto;
+				height: 40px;
+			}
+
 			.main-container {
   				width: 1000px;
   				margin: 0 auto;
@@ -17,8 +24,29 @@
 
 			#chosen{
 				float: center;
-				font-family: 'Stoke', serif;
 				color: #470024;
+				font-size: 24pt;
+				font-family: 'Stoke', serif;
+			}
+
+			#currentCounty{
+				float: center;
+				color: #470024;
+				font-size: 24pt;
+				font-family: 'Stoke', serif;
+			}
+
+			#year{
+				position: relative; 
+				display: inline-block; 
+				overflow: visible; 
+				padding: 0; 
+				margin: 24px 0px 0px 0px; 
+				width:906px ; 
+			}
+
+			p{
+				display: inline;
 			}
 
 			svg {
