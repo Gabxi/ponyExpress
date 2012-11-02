@@ -132,8 +132,8 @@
     				date = data[d.key][2]
     		
     				year = Number(date.split("/")[2])
-    				opa = (highestyear - year + 1) * 5
-    				console.log(opa)
+    				opa = ((highestyear - year + 1) / 10) 
+    				
     				return String(opa);
     			});/*
 				d3.selectAll(".active")
@@ -234,9 +234,7 @@
 				      .append("svg:circle")
 				      .attr("r", 10)
 				      .style("fill", "blue")
-					  .style("opacity", "0")
 				      .style("stroke", "black")
-				      .style("stroke-opacity", 1)
 				      .attr("id", function(d) {return d.key})
 				      .style("display", "none")
     					.on("mousedown", function(d) {
