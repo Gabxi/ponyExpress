@@ -31,16 +31,22 @@
  			input[type="range"]::-webkit-slider-thumb{
  				-webkit-appearance: none; 
  				position: relative;
-    top: -1px;
-    z-index: 1;
-    width: 15px;
-    height: 15px;
+    			top: -1px;
+   				 z-index: 1;
+    			width: 20px;
+    			height: 20px;
  
-    -webkit-border-radius: 40px;
-    -moz-border-radius: 40px;
-    border-radius: 40px;
- 				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF9912), color-stop(50%,#FF9912), color-stop(51%,#FF9912), color-stop(100%,#FF9912));
-    
+    			-webkit-border-radius: 40px;
+    			-moz-border-radius: 40px;
+    			border-radius: 40px;
+ 				background-image: -webkit-gradient(
+ 				linear,
+	left bottom,
+	right top,
+	color-stop(0.06, rgb(207,170,58)),
+	color-stop(0.49, rgb(207,250,87)),
+	color-stop(0.93, rgb(171,164,38)));
+    	
  			}
 
 			.main-container{
